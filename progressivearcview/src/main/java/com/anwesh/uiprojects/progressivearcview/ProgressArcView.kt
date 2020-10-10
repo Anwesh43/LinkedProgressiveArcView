@@ -182,4 +182,27 @@ class ProgressArcView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : View, var animated : Boolean = false) {
+
+        private val pa : ProgressArc = ProgressArc(0)
+        private val animator : Animator = Animator(view)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            pa.draw(canvas, paint)
+            animator.animate {
+                pa.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            pa.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
