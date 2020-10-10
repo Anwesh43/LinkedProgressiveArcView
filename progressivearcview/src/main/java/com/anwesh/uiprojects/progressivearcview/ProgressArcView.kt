@@ -36,15 +36,18 @@ fun Canvas.drawProgressArc(scale : Float, w : Float, h : Float, paint : Paint) {
     val sf : Float = scale.sinify()
     val sf1 : Float = sf.divideScale(0, parts)
     val size : Float = Math.min(w, h) / sizeFactor
-    val fontSize : Float = size / 5
-    val tx : String = "${Math.floor(100.0 * scale).toInt()}"
-    val tw : Float = paint.measureText(tx) / 2
+    val fontSize : Float = size / 4
+    val tx : String = "${Math.floor(100.0 * sf1).toInt()}"
+    val tw : Float = paint.measureText(tx)
     paint.textSize = fontSize
-    paint.style = Paint.Style.STROKE
     save()
     translate(w / 2, h / 2)
+    paint.style = Paint.Style.STROKE
     drawArc(RectF(-size / 2, -size / 2, size / 2, size / 2), -90f, 360f * sf1, false, paint)
-    drawText(tx, -tw / 2, -fontSize / 4, paint)
+    if (sf1 > 0) {
+        paint.style = Paint.Style.FILL
+        drawText(tx, -tw / 2, fontSize / 4, paint)
+    }
     restore()
 }
 
