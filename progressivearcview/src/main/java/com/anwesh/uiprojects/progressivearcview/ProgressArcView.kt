@@ -207,4 +207,13 @@ class ProgressArcView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : ProgressArcView {
+            val view : ProgressArcView = ProgressArcView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
